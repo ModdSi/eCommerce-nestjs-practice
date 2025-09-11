@@ -25,10 +25,14 @@ export class CatagoriesController {
   create(@Body() CreateCatagoryDto: CreateCatagoryDto) {
     return this.CatagoriesService.create(CreateCatagoryDto);
   }
-  //   @Get()
-  //   findAll(@Query('role') role: string) {
-  //       return this.usersService.findAll(role);
-  //   }
+  @Get()
+  async findAll(
+    @Query('offset') offset: number = 0,
+    @Query('limit') limit: number = 10,
+  ) {
+    return this.CatagoriesService.findAll(offset, limit);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.CatagoriesService.findOne(+id);
@@ -36,7 +40,7 @@ export class CatagoriesController {
   @Put(':id')
   async update(
     @Param('id') id: number,
-    @Body() UpdateCatagoryDto: Partial<CreateCatagoryDto>,
+    @Body() UpdateCatagoryDto: Partial<UpdateCatagoryDto>,
   ) {
     return this.CatagoriesService.update(id, UpdateCatagoryDto);
   }

@@ -25,10 +25,13 @@ export class UsersController {
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
-  //   @Get()
-  //   findAll(@Query('role') role: string) {
-  //       return this.usersService.findAll(role);
-  //   }
+  @Get()
+  async findAll(
+    @Query('offset') offset: number = 0,
+    @Query('limit') limit: number = 10,
+  ) {
+    return this.usersService.findAll(offset, limit);
+  }
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(+id);
