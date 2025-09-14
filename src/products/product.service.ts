@@ -8,14 +8,14 @@ import { Repository } from 'typeorm';
 import { CreateProductDto } from './dto/create-product.dto';
 import { Product } from './entities/product.entity';
 import { Catagory } from '../catagories/entities/catagory.entity';
+import { CatagoriesService } from 'src/catagories/catagories.service';
 
 @Injectable()
 export class ProductsService {
   constructor(
     @InjectRepository(Product)
     private readonly productRepository: Repository<Product>,
-    @InjectRepository(Catagory)
-    private readonly catagoryRepository: Repository<Catagory>,
+    private readonly catagoryService: CatagoriesService,
   ) {}
 
   //  1-create()
@@ -42,14 +42,12 @@ export class ProductsService {
       stock: stock,
     });
     if (catagoryId) {
-      const cat = await this.catagoryRepository.findOne({
-        where: { id: catagoryId },
-      });
-      if (!cat) {
+      const catagory = await this.catagoryService.findOne(catagoryId);
+      if (!catagory) {
         throw new NotFoundException('Catagory not found');
       }
-      product.catagory = cat;
-      product.catagoryId = cat.id;
+      product.catagory = catagory;
+      product.catagoryId = catagory.id;
     }
     return this.productRepository.save(product);
   }
@@ -101,14 +99,15 @@ export class ProductsService {
       if (catagoryId === null) {
         product.catagory = null;
         product.catagoryId = null;
-      } else {
-        const cat = await this.catagoryRepository.findOne({
-          where: { id: catagoryId },
-        });
-        if (!cat) throw new NotFoundException('Catagory not found');
-        product.catagory = cat;
-        product.catagoryId = cat.id;
       }
+      // else {
+      //   const cat = await this.catagoryRepository.findOne({
+      //     where: { id: catagoryId },
+      //   });
+      //   if (!cat) throw new NotFoundException('Catagory not found');
+      //   product.catagory = cat;
+      //   product.catagoryId = cat.id;
+      // }
     }
     return this.productRepository.save(product);
   }

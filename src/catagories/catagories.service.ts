@@ -20,7 +20,10 @@ export class CatagoriesService {
   //  4-update()
   //  5-remove()
 
-  async create(CreateCatagoryDto: CreateCatagoryDto): Promise<Catagory> {
+  async create(
+    CreateCatagoryDto: CreateCatagoryDto,
+    image?: Express.Multer.File,
+  ): Promise<Catagory> {
     const { title, describtion } = CreateCatagoryDto;
     const existingCatagory = await this.catagoryRepository.findOne({
       where: { title: title },
@@ -33,6 +36,7 @@ export class CatagoriesService {
     const catagory = this.catagoryRepository.create({
       title: title,
       describtion: describtion,
+      image: `/uploads/catagories/${image ? image.filename : ''}`,
     });
     return this.catagoryRepository.save(catagory);
   }

@@ -19,6 +19,9 @@ export class Catagory {
   @Column({ length: 255 })
   describtion: string;
 
+  @Column({nullable: true})
+  image: string;
+  
   @CreateDateColumn()
   createdAt: Date;
 

@@ -28,7 +28,7 @@ export class ProductController {
   findOne(@Param('id') id: string) {
     return this.productsService.findOne(+id);
   }
-
+  
   @Put(':id')
   update(@Param('id') id: string, @Body() dto: Partial<CreateProductDto>) {
     return this.productsService.update(+id, dto);
