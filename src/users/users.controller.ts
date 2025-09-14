@@ -25,6 +25,8 @@ export class UsersController {
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
+
+  
   @Get()
   async findAll(
     @Query('offset') offset: number = 0,
@@ -32,6 +34,8 @@ export class UsersController {
   ) {
     return this.usersService.findAll(offset, limit);
   }
+
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(+id);
