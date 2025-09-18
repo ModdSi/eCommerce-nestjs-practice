@@ -4,9 +4,11 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
   CreateDateColumn,
+  OneToMany,
 } from 'typeorm';
 import { ManyToOne, JoinColumn } from 'typeorm';
 import { Catagory } from '../../catagories/entities/catagory.entity';
+import { ProductImages } from 'src/product_images/entities/product_images.entity';
 
 @Entity('Products')
 export class Product {
@@ -39,4 +41,8 @@ export class Product {
 
   @Column({ nullable: true })
   catagoryId?: number | null;
+  @OneToMany(() => ProductImages, (productImage) => productImage.product, {
+    cascade: true,
+  })
+  productImages: ProductImages[];
 }

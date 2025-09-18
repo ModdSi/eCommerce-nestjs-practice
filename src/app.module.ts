@@ -7,6 +7,7 @@ import { CatagoriesModule } from './catagories/catagories.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ProductsModule } from './products/product.module';
 import { AuthModule } from './auth/auth.module';
+import { ProductImagesModule } from './product_images/product_images.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { AuthModule } from './auth/auth.module';
     CatagoriesModule,
     ProductsModule,
     AuthModule,
+    ProductImagesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
